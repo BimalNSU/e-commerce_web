@@ -1,0 +1,243 @@
+.themeLight {
+  --bg-main:
+    radial-gradient(circle at 12% 18%, rgba(59,130,246,.12), transparent 30%),
+    radial-gradient(circle at 85% 15%, rgba(168,85,247,.10), transparent 28%),
+    radial-gradient(circle at 80% 82%, rgba(16,185,129,.08), transparent 32%),
+    linear-gradient(135deg, #f8fafc 0%, #eef4ff 100%);
+
+  --glass-bg: rgba(255,255,255,.55);
+  --glass-bg-strong: rgba(255,255,255,.70);
+
+
+  --bg-sidebar: rgba(255, 255, 255, 0.78);
+  --bg-topbar: rgba(255, 255, 255, 0.72);
+  --bg-card: rgba(255, 255, 255, 0.65);
+
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+
+  --border-color: rgba(255, 255, 255, 0.35);
+
+  --hover-bg: rgba(0, 0, 0, 0.05);
+
+  --icon-color: #111827;
+
+  /* --shadow: 0 8px 30px rgba(0, 0, 0, 0.08); */
+  --shadow: 0 10px 30px rgba(15,23,42,.08);
+
+  --blur: 24px;
+}
+
+.themeDark {
+  --bg-main:
+    radial-gradient(circle at 15% 15%, rgba(59,130,246,.22), transparent 30%),
+    radial-gradient(circle at 88% 18%, rgba(168,85,247,.18), transparent 28%),
+    radial-gradient(circle at 78% 80%, rgba(16,185,129,.14), transparent 35%),
+    linear-gradient(135deg,#020617,#0f172a,#111827);
+
+  --glass-bg: rgba(15,23,42,.45);
+  --glass-bg-strong: rgba(15,23,42,.62);
+
+
+  --bg-sidebar: rgba(17, 24, 39, 0.82);
+  --bg-topbar: rgba(30, 41, 59, 0.78);
+  --bg-card: rgba(30, 41, 59, 0.68);
+
+  --text-primary: #f9fafb;
+  --text-secondary: #94a3b8;
+
+  --border-color: rgba(255, 255, 255, 0.08);
+
+  --hover-bg: rgba(255, 255, 255, 0.08);
+
+  --icon-color: #f9fafb;
+
+  /* --shadow: 0 8px 30px rgba(0, 0, 0, 0.35); */
+   --shadow: 0 12px 36px rgba(0,0,0,.35);
+
+  --blur:24px;
+}
+
+.officeSider {
+    background: var(--bg-main);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-right: 1px solid var(--border-color);
+
+  box-shadow: var(--shadow);
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center; /*(vertically center): Center the alignments for all the items of the flexible*/
+  justify-content: space-between; /*horizontally space between items*/
+
+  background: transparent;
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-bottom: 1px solid var(--border-color);
+  padding: 0px 10px 0px 5px;
+  box-shadow: var(--shadow);
+}
+.topbarLeft {
+  display: flex;
+  align-items: center;
+}
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: auto;
+}
+
+.mainLayout {
+  background: var(--bg-main);
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.officeLayout {
+   background: var(--bg-main);
+
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.officeLayout::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    z-index: -1;
+
+    /* background:
+        radial-gradient(circle at top left, #4f46e520, transparent 35%),
+        radial-gradient(circle at bottom right, #06b6d420, transparent 35%),
+        var(--bg-main); */
+    /* background: transparent; */
+
+    pointer-events:none;
+    background:
+      radial-gradient(circle at 10% 10%,rgba(96,165,250,.18),transparent 30%),
+      radial-gradient(circle at 90% 15%,rgba(192,132,252,.18),transparent 25%),
+      radial-gradient(circle at 70% 80%,rgba(34,197,94,.12),transparent 30%);
+}
+.officeSider,
+.topbar,
+.contentWrapper,
+.footer {
+    /* background: rgba(255,255,255,.65); */
+
+    background:var(--glass-bg-strong)!important;
+    backdrop-filter: blur(18px);
+}
+/*..*/
+
+.officeContent {
+  padding: 14px;
+  background: transparent;
+   /* background:
+        url("/background.jpg") center center/cover no-repeat fixed; */
+}
+
+.contentWrapper {
+  min-height: calc(100vh - 120px);
+
+  /* background: var(--bg-card); */
+  background: var(--glass-bg);
+
+  color: var(--text-primary);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 16px;
+
+  padding: 24px;
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow: var(--shadow);
+
+  transition: all .25s ease;
+}
+
+.footer {
+  /* background: var(--glass-bg); */
+
+  text-align: center;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-color);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow: var(--shadow);
+
+  
+  
+}
+
+.collapseBtn,
+/* .iconBtn {
+  width: 42px !important;
+  height: 42px !important;
+
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: var(--icon-color) !important;
+
+  transition: all .2s;
+} */
+
+.collapseBtn:hover,
+.iconBtn:hover {
+  background: var(--hover-bg) !important;
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all .2s;
+}
+
+.userProfile:hover {
+  background: var(--hover-bg);
+}
+
+
+/* .userMeta {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  color: var(--text-primary);
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.userRole {
+  color: var(--text-secondary);
+  font-size: 12px;
+} */

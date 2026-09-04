@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from "../api/api";
+import api from "../shared/api/api";
 import { useAuthStore } from "../store/auth.store";
 
 export default function Login() {
