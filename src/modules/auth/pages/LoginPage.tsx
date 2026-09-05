@@ -2,10 +2,10 @@ import { Form, Input, Button, Typography, Card, Row, Col, App } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { loginApi } from "./auth.api";
-import { useAuthStore } from "./auth.store";
-import { UserType } from "../users/user.types";
-import { AuthUser } from "./auth.types";
+import { loginApi } from "../auth.api";
+import { useAuthStore } from "../auth.store";
+import { UserType } from "../../users/user.types";
+import { AuthUser } from "../auth.types";
 
 const { Title, Text } = Typography;
 

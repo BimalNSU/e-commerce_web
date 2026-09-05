@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { useAuthStore } from "./auth.store";
 import { validateAccessToken } from "./auth-session";
 
-const REFRESH_CHECK_BUFFER = 30_000;
+const REFRESH_CHECK_BUFFER = 10_000;
 
 const AuthSessionManager = () => {
   const accessToken = useAuthStore((state) => state.accessToken);

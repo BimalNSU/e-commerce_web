@@ -10,12 +10,10 @@ interface AuthState {
   setAuth: (token: string, user: any) => void;
   setUser: (user: any) => void;
   clearAuth: () => void;
-  isLogOut?: boolean;
 }
 const initialState = {
   accessToken: undefined,
   user: undefined,
-  isLogOut: undefined,
 };
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -23,7 +21,7 @@ export const useAuthStore = create<AuthState>()(
       ...initialState,
       setAuth: (token, user) => {
         const currentToken = get().accessToken;
-        set({ accessToken: token, user, isLogOut: undefined });
+        set({ accessToken: token, user });
         const { socket, connect, isLeader } = useSocketStore.getState();
 
         // First login → connect socket
@@ -39,7 +37,7 @@ export const useAuthStore = create<AuthState>()(
 
       setUser: (user) => set({ user }),
       clearAuth: () => {
-        set({ ...initialState, isLogOut: true });
+        set({ ...initialState });
         useSocketStore.getState().disconnect();
       },
     }),

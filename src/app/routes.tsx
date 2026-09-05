@@ -1,11 +1,12 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "../modules/auth/LoginPage";
+import LoginPage from "../modules/auth/pages/LoginPage";
 import ProtectedRoute from "../modules/auth/ProtectedRoute";
 import Forbidden from "../pages/Forbidden";
 import { lazy } from "react";
 import RequirePermission from "../modules/auth/RequirePermission";
 import { UserType } from "../modules/users/user.types";
 import UserEditPage from "../modules/users/pages/UserEditPage";
+import ForgotPassword from "../modules/auth/pages/ForgetPage";
 
 const UserCreatePage = lazy(
   () => import("../modules/users/pages/UserCreatePage"),
@@ -39,6 +40,7 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
 
       <Route
         path="/admin/*"
