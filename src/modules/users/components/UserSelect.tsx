@@ -2,22 +2,15 @@ import { ServerSearchSelect } from "../../../shared/components/ServerSearchSelec
 import { useUserOptions } from "../hooks/useUserOptions";
 import { UserOption } from "../types/user.types";
 interface UserSelectProps {
-  // value?: UserId;
-  value?: UserOption;
-  initialOption?: UserOption;
-  // onChange?: (value: number | string) => void;
+  value?: UserOption; //get value automatically from form state
   onChange?: (user?: UserOption) => void;
 }
 
-export function UserSelect({
-  value,
-  initialOption,
-  onChange,
-}: UserSelectProps) {
+const UserSelect = ({ value, onChange }: UserSelectProps) => {
   return (
     <ServerSearchSelect
-      // value={value?.id}
-      initialOption={initialOption}
+      value={value?.id}
+      initialOption={value}
       onChange={onChange}
       searchQuery={useUserOptions}
       getOptionValue={(user) => user.id}
@@ -27,4 +20,5 @@ export function UserSelect({
       placeholder="Search user..."
     />
   );
-}
+};
+export default UserSelect;

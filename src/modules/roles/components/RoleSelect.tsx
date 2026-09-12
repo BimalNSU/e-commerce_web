@@ -7,7 +7,7 @@ interface RoleSelectProps {
   onChange?: (value?: RoleOption) => void;
 }
 
-export function RoleSelect({ value, onChange }: RoleSelectProps) {
+const RoleSelect = ({ value, onChange }: RoleSelectProps) => {
   const { data, isLoading } = useRoleOptions();
 
   const options = useMemo(
@@ -37,4 +37,5 @@ export function RoleSelect({ value, onChange }: RoleSelectProps) {
       style={{ width: "100%" }}
     />
   );
-}
+};
+export default RoleSelect;

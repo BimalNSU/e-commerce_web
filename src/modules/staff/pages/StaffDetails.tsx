@@ -1,8 +1,9 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useStaffProfile } from "../hooks/useStaffProfile";
 import Loading from "../../../components/loading";
 import {
   App,
+  Button,
   Descriptions,
   DescriptionsProps,
   Empty,
@@ -10,13 +11,13 @@ import {
   Result,
 } from "antd";
 import { useState } from "react";
-import { StaffProfileForm } from "./components/StaffProfileForm";
+import StaffProfileForm from "./components/StaffProfileForm";
 import { DATE_FORMAT } from "../../../shared/constants/date-format";
 import { StaffProfileFormValues } from "../types/staff.types";
 import { useUpdateStaffProfile } from "../hooks/useUpdateStaffProfile";
 import dayjs from "dayjs";
 
-const StaffProfile = () => {
+const StaffProfileDetail = () => {
   const { modal, notification } = App.useApp();
   const { id } = useParams();
   const staffProfileId = Number(id);
@@ -33,57 +34,48 @@ const StaffProfile = () => {
   if (!data) {
     return <Empty />;
   }
+
   const items: DescriptionsProps["items"] = [
-    {
-      key: "1",
-      label: "#",
-      children: <p>{data.id}</p>,
-    },
-    {
-      key: "2",
-      label: "Employee Code",
-      children: <p>{data.employeeCode}</p>,
-    },
-    {
-      key: "3",
-      label: "Department",
-      children: <p>{data.department}</p>,
-    },
-    {
-      key: "4",
-      label: "Designation",
-      children: <p>{data.designation}</p>,
-    },
+    { key: "1", label: "#", children: data.id },
+    { key: "2", label: "Employee Code", children: data.employeeCode },
+    { key: "3", label: "Department", children: data.department },
+    { key: "4", label: "Designation", children: data.designation || "N/A" },
     {
       key: "5",
       label: "Assign Date",
-      children: <p>{dayjs(data.assignDate).format(DATE_FORMAT)}</p>,
+      children: dayjs(data.assignDate).format(DATE_FORMAT),
     },
 
     {
       key: "6",
       label: "Created At",
-      children: <p>{dayjs(data.createdAt).format(DATE_FORMAT)}</p>,
+      children: dayjs(data.createdAt).format(DATE_FORMAT),
     },
     {
       key: "7",
       label: "Shop",
-      children: <p>{data.shop.name}</p>,
+      children: (
+        <Link to={`/admin/shops/${data.shop.id}`}>{data.shop.name}</Link>
+      ),
     },
 
     {
       key: "8",
       label: "User",
       children: (
-        <p>{`${data.user.firstName}${
-          data.user.lastName ? ` ${data.user.lastName}` : ""
-        }`}</p>
+        <Link to={`/admin/users/${data.user.id}`}>
+          {`${data.user.firstName}${
+            data.user.lastName ? ` ${data.user.lastName}` : ""
+          }`}
+        </Link>
       ),
     },
     {
       key: "9",
       label: "Role",
-      children: <p>{data.role.name}</p>,
+      children: (
+        <Link to={`/admin/roles/${data.role.id}`}>{data.role.name}</Link>
+      ),
     },
   ];
 
@@ -94,19 +86,41 @@ const StaffProfile = () => {
         try {
           await updateStaffProfile({ id: staffProfileId, data: values });
           notification.success({
-            title: "Staff profile is created successfully",
+            title: "Staff profile is updated successfully",
           });
           form.resetFields();
           setIsEditMode(false);
-        } catch (err) {
-          notification.error({ title: "Fail to create staff profile" });
+        } catch (err: any) {
+          const errors = err.response?.data?.errors;
+          if (errors) {
+            form.setFields(
+              errors.map((error: any) => ({
+                name: error.field,
+                errors: [error.message],
+              })),
+            );
+            notification.error({ title: "Fail to update staff profile" });
+            return;
+          }
+          notification.error({
+            title: err.response?.data?.message ?? "Something went wrong",
+          });
         }
       },
     });
   };
-  return isEditMode ? (
+
+  return !isEditMode ? (
     <>
-      <Descriptions items={items} />
+      <Descriptions
+        title="Staff Profile"
+        extra={
+          <Button type="primary" onClick={() => setIsEditMode(true)}>
+            Edit
+          </Button>
+        }
+        items={items}
+      />
     </>
   ) : (
     <StaffProfileForm
@@ -116,4 +130,4 @@ const StaffProfile = () => {
     />
   );
 };
-export default StaffProfile;
+export default StaffProfileDetail;

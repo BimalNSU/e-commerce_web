@@ -1,23 +1,17 @@
 import { ServerSearchSelect } from "../../../shared/components/ServerSearchSelect";
 import { useShopOptions } from "../hooks/useShopOptions";
-import { ShopId, ShopOption } from "../types/shop.types";
+import { ShopOption } from "../types/shop.types";
 
 interface ShopSelectProps {
-  value?: ShopId;
-  initialOption?: ShopOption;
-  // onChange?: (value: number | string) => void;
+  value?: ShopOption; //get value automatically from form state
   onChange?: (shop?: ShopOption) => void;
 }
 
-export function ShopSelect({
-  value,
-  initialOption,
-  onChange,
-}: ShopSelectProps) {
+const ShopSelect = ({ value, onChange }: ShopSelectProps) => {
   return (
     <ServerSearchSelect
-      // value={value}
-      initialOption={initialOption}
+      value={value?.id}
+      initialOption={value}
       onChange={onChange}
       searchQuery={useShopOptions}
       getOptionValue={(shop) => shop.id}
@@ -25,4 +19,5 @@ export function ShopSelect({
       placeholder="Search shop..."
     />
   );
-}
+};
+export default ShopSelect;

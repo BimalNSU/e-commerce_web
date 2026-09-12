@@ -1,6 +1,6 @@
-import { App, Card } from "antd";
+import { App, Card, FormInstance } from "antd";
 import { useNavigate } from "react-router-dom";
-import { StaffProfileForm } from "./components/StaffProfileForm";
+import StaffProfileForm from "./components/StaffProfileForm";
 import { useCreateStaffProfile } from "../hooks/useCreateStaffProfile";
 import { StaffProfileFormValues } from "../types/staff.types";
 
@@ -9,19 +9,35 @@ const StaffProfileCreatePage = () => {
   const navigate = useNavigate();
   const { mutateAsync, isPending } = useCreateStaffProfile();
 
-  const handleSubmit = async (values: StaffProfileFormValues) => {
+  const handleSubmit = async (
+    values: StaffProfileFormValues,
+    form: FormInstance,
+  ) => {
     console.log("values", values);
     modal.confirm({
-      title: "Are you sure to update shop?",
+      title: "Are you sure to create new staff profile?",
       async onOk() {
         try {
           await mutateAsync(values);
           notification.success({
             title: "Staff profile is created successfully",
           });
-          navigate("/staff-profiles");
-        } catch (err) {
-          notification.error({ title: "Fail to create staff profile" });
+          // navigate("/staff-profiles");
+        } catch (err: any) {
+          const errors = err.response?.data?.errors;
+          if (errors) {
+            form.setFields(
+              errors.map((error: any) => ({
+                name: error.field,
+                errors: [error.message],
+              })),
+            );
+            notification.error({ title: "Fail to create staff profile" });
+            return;
+          }
+          notification.error({
+            title: err.response?.data?.message ?? "Something went wrong",
+          });
         }
       },
     });
@@ -32,7 +48,7 @@ const StaffProfileCreatePage = () => {
       <StaffProfileForm
         loading={isPending}
         onSubmit={handleSubmit}
-        onCancel={() => navigate("/staff-profiles")}
+        onCancel={() => navigate("admin/staff-profiles")}
       />
     </Card>
   );

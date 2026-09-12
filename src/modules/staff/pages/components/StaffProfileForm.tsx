@@ -13,10 +13,11 @@ import {
   StaffProfileDetail,
 } from "../../types/staff.types";
 import * as validator from "../../../../shared/utils/validation";
-import { ShopSelect } from "../../../shop/components/ShopSelect";
-import { UserSelect } from "../../../users/components/UserSelect";
-import { RoleSelect } from "../../../roles/components/RoleSelect";
+import ShopSelect from "../../../shop/components/ShopSelect";
+import UserSelect from "../../../users/components/UserSelect";
+import RoleSelect from "../../../roles/components/RoleSelect";
 import dayjs from "dayjs";
+import { useEffect } from "react";
 
 interface StaffProfileFormProps {
   initialValues?: StaffProfileDetail;
@@ -25,34 +26,37 @@ interface StaffProfileFormProps {
   onCancel?: () => void;
 }
 
-export function StaffProfileForm({
+const StaffProfileForm = ({
   initialValues,
   loading = false,
   onSubmit,
   onCancel,
-}: StaffProfileFormProps) {
+}: StaffProfileFormProps) => {
   const [form] = Form.useForm<StaffProfileFormValues>();
   const handleCancel = () => {
     form.resetFields();
     onCancel?.();
   };
+  useEffect(() => {
+    if (initialValues) {
+      form.setFieldsValue({
+        employeeCode: initialValues.employeeCode,
+        shop: initialValues.shop,
+        user: initialValues.user,
+        role: initialValues.role,
+        department: initialValues.department,
+        designation: initialValues.designation,
+        assignDate: dayjs(initialValues.assignDate),
+        status: initialValues.status,
+      });
+    } else {
+      form.setFieldsValue({ status: StaffStatus.Active });
+    }
+  }, [initialValues]);
   return (
     <Form
       form={form}
       layout="vertical"
-      initialValues={{
-        status: StaffStatus.Active,
-        ...(initialValues && {
-          employeeCode: initialValues.employeeCode,
-          shopId: initialValues.shop.id,
-          userId: initialValues.user.id,
-          roleId: initialValues.role.id,
-          department: initialValues.department,
-          designation: initialValues.designation,
-          assignDate: dayjs(initialValues.assignDate),
-          status: initialValues.status,
-        }),
-      }}
       onFinish={(values) => onSubmit(values, form)}
     >
       <Form.Item
@@ -71,7 +75,7 @@ export function StaffProfileForm({
         label="Shop"
         rules={[{ required: true, message: "Please select shop" }]}
       >
-        <ShopSelect initialOption={initialValues?.shop} />
+        <ShopSelect />
       </Form.Item>
 
       <Form.Item
@@ -79,7 +83,7 @@ export function StaffProfileForm({
         label="User"
         rules={[{ required: true, message: "Please select user" }]}
       >
-        <UserSelect initialOption={initialValues?.user} />
+        <UserSelect />
       </Form.Item>
 
       <Form.Item
@@ -155,4 +159,5 @@ export function StaffProfileForm({
       </Form.Item>
     </Form>
   );
-}
+};
+export default StaffProfileForm;

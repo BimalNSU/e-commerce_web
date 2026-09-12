@@ -22,7 +22,7 @@ export interface ServerSearchSelectProps<T> {
 }
 
 export function ServerSearchSelect<T>({
-  // value,
+  value,
   initialOption,
   onChange,
   searchQuery,
@@ -56,7 +56,7 @@ export function ServerSearchSelect<T>({
     <Select<number | string, ServerOption<T>>
       showSearch={{ filterOption: false, onSearch: setSearch }}
       allowClear
-      // value={value}
+      value={value}
       placeholder={placeholder}
       disabled={disabled}
       loading={isFetching}
