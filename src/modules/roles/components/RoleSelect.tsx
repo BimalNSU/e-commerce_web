@@ -2,6 +2,8 @@ import { Select } from "antd";
 import { useRoleOptions } from "../hooks/useRoleOptions";
 import { RoleOption } from "../api/roles.api";
 import { useMemo } from "react";
+
+//form will automatically pass RoleSelectProps from form state
 interface RoleSelectProps {
   value?: RoleOption;
   onChange?: (value?: RoleOption) => void;

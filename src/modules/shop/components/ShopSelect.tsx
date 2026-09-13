@@ -2,8 +2,9 @@ import { ServerSearchSelect } from "../../../shared/components/ServerSearchSelec
 import { useShopOptions } from "../hooks/useShopOptions";
 import { ShopOption } from "../types/shop.types";
 
+//form will automatically pass ShopSelectProps from form state
 interface ShopSelectProps {
-  value?: ShopOption; //get value automatically from form state
+  value?: ShopOption;
   onChange?: (shop?: ShopOption) => void;
 }
 

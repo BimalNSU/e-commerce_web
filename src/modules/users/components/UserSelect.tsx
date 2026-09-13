@@ -1,8 +1,10 @@
 import { ServerSearchSelect } from "../../../shared/components/ServerSearchSelect";
 import { useUserOptions } from "../hooks/useUserOptions";
 import { UserOption } from "../types/user.types";
+
+//form will automatically pass UserSelectProps from form state
 interface UserSelectProps {
-  value?: UserOption; //get value automatically from form state
+  value?: UserOption;
   onChange?: (user?: UserOption) => void;
 }
 
